@@ -73,14 +73,14 @@ Resources:
           PolicyDocument:
             Version: 2012-10-17
             Statement:
-              - Sid: CertbotLambdaListPolicy
+              - Sid: CertificateManagerLambdaListPolicy
                 Effect: Allow
                 Action:
                   - route53:ListHostedZonesByName
                   - acm:ListCertificates
                 Resource:
                   - "*"
-              - Sid: CertbotLambdaUpdatePolicy
+              - Sid: CertificateManagerLambdaUpdatePolicy
                 Effect: Allow
                 Action:
                   - route53:GetChange

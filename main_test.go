@@ -3,7 +3,7 @@ package main
 import (
 	"testing"
 
-	"github.com/thomasbunyan/certbot-lambda/internal/certlambda"
+	"github.com/thomasbunyan/certificate-manager/internal/certlambda"
 )
 
 func TestHandleRequest(t *testing.T) {

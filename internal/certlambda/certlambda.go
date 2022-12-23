@@ -8,9 +8,9 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/acm"
 	"github.com/aws/aws-sdk-go-v2/service/route53"
 	"github.com/pkg/errors"
-	"github.com/thomasbunyan/certbot-lambda/internal/acme"
-	"github.com/thomasbunyan/certbot-lambda/internal/acme/challenge/dns01"
-	"github.com/thomasbunyan/certbot-lambda/internal/certificate"
+	"github.com/thomasbunyan/certificate-manager/internal/acme"
+	"github.com/thomasbunyan/certificate-manager/internal/acme/challenge/dns01"
+	"github.com/thomasbunyan/certificate-manager/internal/certificate"
 
 	cert "github.com/go-acme/lego/v4/certificate"
 )

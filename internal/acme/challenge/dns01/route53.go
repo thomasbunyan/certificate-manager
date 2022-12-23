@@ -11,7 +11,7 @@ import (
 	"github.com/go-acme/lego/v4/challenge/dns01"
 	"github.com/go-acme/lego/v4/platform/wait"
 	"github.com/pkg/errors"
-	"github.com/thomasbunyan/certbot-lambda/internal/common"
+	"github.com/thomasbunyan/certificate-manager/internal/common"
 )
 
 // https://github.com/go-acme/lego/blob/master/providers/dns/route53/route53.go

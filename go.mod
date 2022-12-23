@@ -1,4 +1,4 @@
-module github.com/thomasbunyan/certbot-lambda
+module github.com/thomasbunyan/certificate-manager
 
 go 1.19
 
