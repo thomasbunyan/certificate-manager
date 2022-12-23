@@ -18,11 +18,11 @@ jobs:
         with:
           go-version-file: "go.mod"
           cache: true
-      # - name: Configure AWS Credentials
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     role-to-assume: arn:aws:iam::109260931664:role/github-actions-role
-      #     aws-region: eu-west-1
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::109260931664:role/github-actions-role
+          aws-region: eu-west-1
       - name: Build
         run: |
           GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o out .
