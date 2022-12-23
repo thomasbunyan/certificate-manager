@@ -30,9 +30,9 @@ jobs:
         run: |
           GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o out .
           zip -9 -j deploy.zip out
-      # - name: Deploy
-      #   run: |
-      #     aws lambda update-function-code \
-      #       --function-name $FUNCTION_NAME \
-      #       --zip-file deploy.zip \
-      #       --publish
+      - name: Deploy
+        run: |
+          aws lambda update-function-code \
+            --function-name $FUNCTION_NAME \
+            --zip-file deploy.zip \
+            --publish
