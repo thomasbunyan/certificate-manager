@@ -91,3 +91,18 @@ Resources:
                   - arn:aws:route53:::change/*
                   - !Sub arn:aws:route53:::hostedzone/*
                   - !Sub arn:aws:acm:${AWS::Region}:${AWS::AccountId}:certificate/*
+  UpdateFunctionCodePolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: !Sub ${LambdaName}-update-function-code-policy
+      Roles:
+        - !ImportValue github-actions-role
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Sid: UpdateFunctionCode
+            Action:
+              - lambda:UpdateFunctionCode
+            Effect: Allow
+            Resource:
+              - !GetAtt LambdaFunction.Arn
