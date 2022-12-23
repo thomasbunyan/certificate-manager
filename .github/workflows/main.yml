@@ -9,6 +9,7 @@ on:
       - "*.md"
 env:
   AWS_REGION: eu-west-1
+  FUNCTION_NAME: certificate-manager
 permissions:
   id-token: write
   contents: read
@@ -33,6 +34,6 @@ jobs:
       - name: Deploy
         run: |
           aws lambda update-function-code \
-            --function-name $FUNCTION_NAME \
+            --function-name ${{ env.FUNCTION_NAME }} \
             --zip-file deploy.zip \
             --publish
