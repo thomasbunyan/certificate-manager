@@ -35,5 +35,5 @@ jobs:
         run: |
           aws lambda update-function-code \
             --function-name ${{ env.FUNCTION_NAME }} \
-            --zip-file deploy.zip \
+            --zip-file fileb://deploy.zip \
             --publish
