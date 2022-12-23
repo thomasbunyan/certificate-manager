@@ -30,11 +30,11 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
       - name: Build
         run: |
-          GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o out .
-          zip -9 -j deploy.zip out
+          GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o main .
+          zip -9 -j package.zip main
       - name: Deploy
         run: |
           aws lambda update-function-code \
             --function-name ${{ env.FUNCTION_NAME }} \
-            --zip-file fileb://deploy.zip \
+            --zip-file fileb://package.zip \
             --publish

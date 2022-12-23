@@ -2,7 +2,7 @@ package certlambda
 
 type Event struct {
 	// Fully qualified domain name, such as www.example.com or example.com, for the certificate.
-	DomainNames []string `json:"domainName"`
+	DomainNames []string `json:"domainNames"`
 
 	// Email used for registration and recovery contact.
 	Email string `json:"email"`
