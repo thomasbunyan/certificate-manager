@@ -1,0 +1,93 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Lambda infrastructure.
+Parameters:
+  Architecture:
+    Default: x86_64
+    Description: The instruction set architecture that the function supports.
+    Type: String
+    AllowedValues:
+      - x86_64
+      - arm64
+  LambdaName:
+    Description: The name of the Lambda function, up to 64 characters in length.
+    Type: String
+  LambdaHandler:
+    Default: main
+    Description: The name of the function that Lambda calls to start running your code.
+    Type: String
+  LambdaMemorySize:
+    Description: The amount of memory (MB) that is allocated to your Lambda function.
+    MinValue: 128
+    Type: Number
+  LambdaTimeout:
+    Default: 60
+    Description: The time (in seconds) after which Lambda terminates the function.
+    Type: Number
+  S3Bucket:
+    Default: root-account-repo
+    Description: The S3 Bucket that contains the zip to bootstrap the Lambda function.
+    Type: String
+  S3Key:
+    Description: The S3 key that references the zip to bootstrap the Lambda function.
+    Type: String
+  LogRetention:
+    Default: 30
+    Description: Lambda log retention in days.
+    Type: Number
+Resources:
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Ref LambdaName
+      Architectures:
+        - !Ref Architecture
+      Runtime: go1.x
+      Code:
+        S3Bucket: !Ref S3Bucket
+        S3Key: !Ref S3Key
+      Handler: !Ref LambdaHandler
+      MemorySize: !Ref LambdaMemorySize
+      Timeout: !Ref LambdaTimeout
+      Role: !GetAtt "LambdaFunctionRole.Arn"
+  LambdaLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${LambdaFunction}
+      RetentionInDays: !Ref LogRetention
+  LambdaFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${LambdaName}-role
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action:
+              - sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: !Sub ${LambdaName}-role-policy
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Sid: CertbotLambdaListPolicy
+                Effect: Allow
+                Action:
+                  - route53:ListHostedZones
+                  - acm:ListCertificates
+                Resource:
+                  - "*"
+              - Sid: CertbotLambdaUpdatePolicy
+                Effect: Allow
+                Action:
+                  - route53:GetChange
+                  - route53:ChangeResourceRecordSets
+                  - acm:DescribeCertificate
+                  - acm:ImportCertificate
+                Resource:
+                  - arn:aws:route53:::change/*
+                  - !Sub arn:aws:route53:::hostedzone/*
+                  - !Sub arn:aws:acm:${AWS::Region}:${AWS::AccountId}:certificate/*
