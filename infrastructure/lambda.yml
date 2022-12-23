@@ -107,3 +107,10 @@ Resources:
             Effect: Allow
             Resource:
               - !GetAtt LambdaFunction.Arn
+  LambdaRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: certificate-manager-lambda-trigger
+      Description: Daily trigger to run the certificate-manager Lambda.
+      ScheduleExpression: cron(0 9 * * ? *)
+      State: ENABLED

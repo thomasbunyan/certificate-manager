@@ -1,0 +1,10 @@
+{
+  "Rule": "certificate-manager-lambda-trigger",
+  "Targets": [
+    {
+      "Id": "tombun.com",
+      "Arn": "arn:aws:lambda:eu-west-1:109260931664:function:certificate-manager",
+      "Input": "{\"email\": \"developer.thomasbunyan@gmail.com\",\"renewThreshold\": 21,\"domainNames\": [\"tombun.com\"]}"
+    }
+  ]
+}
