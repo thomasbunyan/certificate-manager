@@ -114,3 +114,10 @@ Resources:
       Description: Daily trigger to run the certificate-manager Lambda.
       ScheduleExpression: cron(0 9 * * ? *)
       State: ENABLED
+  LambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref LambdaFunction
+      SourceArn: !GetAtt LambdaRule.Arn
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
